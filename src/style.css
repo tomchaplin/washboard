@@ -1,0 +1,12 @@
+.six_pack_holder {
+    display: grid;
+    width: 90vw;
+    height: 90vh;
+    margin: 5vh 5vw;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.chart_container {
+    position: relative;
+}
