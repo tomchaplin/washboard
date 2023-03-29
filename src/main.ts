@@ -10,7 +10,7 @@ const charts: ChartManifest[] = [
   {
     id: "relative",
     title: "Relative",
-    additional_max_dim: 1,
+    additional_max_dim: 0,
   },
   {
     id: "cokernel",

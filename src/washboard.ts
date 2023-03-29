@@ -72,16 +72,16 @@ const buildDatasets = (chart: ChartManifest, data: PhimakerData) => {
   return datasets;
 };
 
-function listIntersects(list1: number[], list2: number[]) {
-  return list1.some((elem1) => {
-    return list2.includes(elem1);
-  });
+function someListIntersects(underlying: number[][], list2: number[]) {
+  return underlying.some((list1) =>
+    list1.some((elem1) => list2.includes(elem1))
+  );
 }
 
 const highlightUnderlying = (
   chart_idx: number,
   all_charts: ChartManifest[],
-  underlying: number[]
+  underlying: number[][]
 ) => {
   for (let i = 0; i < all_charts.length; i++) {
     if (i == chart_idx) {
@@ -92,14 +92,17 @@ const highlightUnderlying = (
       let active = [];
       let subdata = dataset.data;
       for (let j = 0; j < subdata.length; j++) {
-        if (listIntersects(underlying, subdata[j].underlying)) {
+        if (someListIntersects(underlying, subdata[j].underlying)) {
           active.push({ datasetIndex, index: j });
         }
       }
       return active;
     });
+    if (typeof activeElements == "undefined") {
+      continue;
+    }
     all_charts[i].handle?.setActiveElements(activeElements);
-    all_charts[i].handle?.tooltip.setActiveElements(activeElements);
+    all_charts[i].handle?.tooltip?.setActiveElements(activeElements);
     all_charts[i].handle?.update();
   }
 };
@@ -110,7 +113,7 @@ const clearHighlights = (chart_idx: number, all_charts: ChartManifest[]) => {
       continue;
     }
     all_charts[i].handle?.setActiveElements([]);
-    all_charts[i].handle?.tooltip.setActiveElements([]);
+    all_charts[i].handle?.tooltip?.setActiveElements([]);
     all_charts[i].handle?.update();
   }
 };
@@ -156,8 +159,10 @@ export function setupCanvas(
               let pt: DiagramPoint = context.raw;
               let pt_string =
                 pt.underlying.length > 1
-                  ? `(${context.parsed.x}, ${context.parsed.y})`
-                  : `(${context.parsed.x}, inf)`;
+                  ? `(${context.parsed.x.toFixed(
+                      3
+                    )}, ${context.parsed.y.toFixed(3)})`
+                  : `(${context.parsed.x.toFixed(3)}, inf)`;
               let dimension = `Dimension ${context.dataset.label}`;
               return [pt_string, dimension];
             },
@@ -220,9 +225,10 @@ export function setupCanvas(
           clearHighlights(chart_idx, all_charts);
           return;
         }
-        let item = items[0];
-        let underlying =
-          chart_data.datasets[item.datasetIndex].data[item.index].underlying;
+        let underlying = items.map(
+          (item) =>
+            chart_data.datasets[item.datasetIndex].data[item.index].underlying
+        );
         highlightUnderlying(chart_idx, all_charts, underlying);
       },
     },
