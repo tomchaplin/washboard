@@ -1,12 +1,30 @@
+body {
+    margin: 0;
+    /*background-color: #141f1f;*/
+}
+
+.full_screen { 
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
 .six_pack_holder {
     display: grid;
-    width: 90vw;
-    height: 90vh;
-    margin: 5vh 5vw;
+    position: relative;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    gap: 3%
 }
 
 .chart_container {
+    display: block;
     position: relative;
 }

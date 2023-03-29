@@ -1,32 +1,53 @@
-import './style.css'
-import { setupCanvas } from './washboard'
+import "./style.css";
+import { setupCanvas, ChartManifest, PhimakerData } from "./washboard";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<div class="six_pack_holder">
-  <div class="chart_container">
-    <canvas id="kernelChart"></canvas>
-  </div>
-  <div class="chart_container">
-    <canvas id="relativeChart"></canvas>
-  </div>
-  <div class="chart_container">
-    <canvas id="cokernelChart"></canvas>
-  </div>
-  <div class="chart_container">
-    <canvas id="domainChart"></canvas>
-  </div>
-  <div class="chart_container">
-    <canvas id="imageChart"></canvas>
-  </div>
-  <div class="chart_container">
-    <canvas id="codomainChart"></canvas>
+const charts: ChartManifest[] = [
+  {
+    id: "kernel",
+    title: "Kernel",
+    dim_shift: 1,
+  },
+  {
+    id: "relative",
+    title: "Relative",
+    additional_max_dim: 1,
+  },
+  {
+    id: "cokernel",
+    title: "Cokernel",
+  },
+  {
+    id: "domain",
+    title: "Domain",
+  },
+  {
+    id: "image",
+    title: "Image",
+  },
+  {
+    id: "codomain",
+    title: "Codomain",
+  },
+];
+
+const buildChart = (chart_data: ChartManifest) => `
+    <div class="chart_container">
+      <canvas id="${chart_data["id"]}Chart"></canvas>
+    </div>
+`;
+
+document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+<div class="full_screen">
+  <div class="six_pack_holder">
+  ${charts.map(buildChart).join("\n")}
   </div>
 </div>
-`
+`;
 
-setupCanvas(document.querySelector<HTMLCanvasElement>('#kernelChart')!, 'kernel');
-setupCanvas(document.querySelector<HTMLCanvasElement>('#relativeChart')!, 'relative');
-setupCanvas(document.querySelector<HTMLCanvasElement>('#cokernelChart')!, 'cokernel');
-setupCanvas(document.querySelector<HTMLCanvasElement>('#domainChart')!, 'domain');
-setupCanvas(document.querySelector<HTMLCanvasElement>('#imageChart')!, 'image');
-setupCanvas(document.querySelector<HTMLCanvasElement>('#codomainChart')!, 'codomain');
+fetch("./data.json")
+  .then((res) => res.json())
+  .then((data) => {
+    charts.forEach((chart, chart_idx) => {
+      chart.handle = setupCanvas(chart_idx, charts, data);
+    });
+  });
