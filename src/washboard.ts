@@ -1,8 +1,24 @@
-import Chart from "chart.js/auto";
-import { ChartData } from "chart.js";
+import {
+  Chart,
+  Colors,
+  ScatterController,
+  PointElement,
+  LinearScale,
+  Title,
+  Tooltip,
+  ChartData,
+} from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 
-Chart.register(annotationPlugin);
+Chart.register(
+  ScatterController,
+  PointElement,
+  LinearScale,
+  Title,
+  Tooltip,
+  Colors,
+  annotationPlugin
+);
 
 export type ChartManifest = {
   id: "kernel" | "relative" | "cokernel" | "domain" | "image" | "codomain";
