@@ -14,6 +14,6 @@ If you would like to know how to use it in your project please get in touch or m
 
 ## References
 
-<a id="1">[1]</a>di Montesano, Sebastiano Cultrera, et al.
+<a id="1">[1]</a> di Montesano, Sebastiano Cultrera, et al.
 "Persistent Homology of Chromatic Alpha Complexes."
 arXiv preprint [arXiv:2212.03128](https://arxiv.org/abs/2212.03128) (2022).
