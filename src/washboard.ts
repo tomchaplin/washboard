@@ -27,12 +27,14 @@ const buildDatasets = (chart, data) => {
     let dataset_data = diagram.map((point) => {
       let pairing = point[0];
       let relations = point[1];
+      let paired = pairing.length > 1;
+      let x = pairing[0]
       let y =
-        pairing.length > 1 ? data.filtration[pairing[1]] : data["pseudo_inf"];
+        paired ? pairing[1] : data["pseudo_inf"];
       return {
-        x: data.filtration[pairing[0]],
+        x,
         y,
-        underlying: pairing,
+        paired,
         relations,
       };
     });
@@ -103,7 +105,7 @@ export function setupCanvas(chart_idx: number, all_charts, data) {
             label: (context) => {
               let pt = context.raw;
               let pt_string =
-                pt.underlying.length > 1
+                pt.paired
                   ? `(${context.parsed.x.toFixed(
                       3
                     )}, ${context.parsed.y.toFixed(3)})`
