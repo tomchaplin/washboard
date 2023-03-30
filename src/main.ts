@@ -5,12 +5,10 @@ const charts: ChartManifest[] = [
   {
     id: "kernel",
     title: "Kernel",
-    dim_shift: 1,
   },
   {
     id: "relative",
     title: "Relative",
-    additional_max_dim: 0,
   },
   {
     id: "cokernel",
