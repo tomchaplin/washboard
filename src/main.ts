@@ -48,4 +48,5 @@ fetch("./data.json")
     charts.forEach((chart, chart_idx) => {
       chart.handle = setupCanvas(chart_idx, charts, data);
     });
+    document.querySelector<HTMLParagraphElement>("#init")?.remove();
   });
