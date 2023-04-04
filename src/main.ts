@@ -1,7 +1,8 @@
 import "./style.css";
-import { setupCanvas, ChartManifest, PhimakerData } from "./washboard";
+import { setupCanvas } from "./washboard";
+import { recurseData } from "./recurse_data";
 
-const charts: ChartManifest[] = [
+const charts = [
   {
     id: "kernel",
     title: "Kernel",
@@ -28,7 +29,7 @@ const charts: ChartManifest[] = [
   },
 ];
 
-const buildChart = (chart_data: ChartManifest) => `
+const buildChart = (chart_data) => `
     <div class="chart_container">
       <canvas id="${chart_data["id"]}Chart"></canvas>
     </div>
@@ -42,9 +43,14 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 </div>
 `;
 
+const options = { recursive: false };
+
 fetch("./data.json")
   .then((res) => res.json())
   .then((data) => {
+    if (options.recursive) {
+      data = recurseData(data);
+    }
     charts.forEach((chart, chart_idx) => {
       chart.handle = setupCanvas(chart_idx, charts, data);
     });

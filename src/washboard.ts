@@ -28,9 +28,8 @@ const buildDatasets = (chart, data) => {
       let pairing = point[0];
       let relations = point[1];
       let paired = pairing.length > 1;
-      let x = pairing[0]
-      let y =
-        paired ? pairing[1] : data["pseudo_inf"];
+      let x = pairing[0];
+      let y = paired ? pairing[1] : data["pseudo_inf"];
       return {
         x,
         y,
@@ -104,12 +103,11 @@ export function setupCanvas(chart_idx: number, all_charts, data) {
           callbacks: {
             label: (context) => {
               let pt = context.raw;
-              let pt_string =
-                pt.paired
-                  ? `(${context.parsed.x.toFixed(
-                      3
-                    )}, ${context.parsed.y.toFixed(3)})`
-                  : `(${context.parsed.x.toFixed(3)}, inf)`;
+              let pt_string = pt.paired
+                ? `(${context.parsed.x.toFixed(3)}, ${context.parsed.y.toFixed(
+                    3
+                  )})`
+                : `(${context.parsed.x.toFixed(3)}, inf)`;
               let dimension = `Dimension ${context.dataset.label}`;
               return [pt_string, dimension];
             },
