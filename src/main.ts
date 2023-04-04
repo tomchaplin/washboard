@@ -43,7 +43,14 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 </div>
 `;
 
-const options = { recursive: false };
+function getOptions() {
+  const usp = new URLSearchParams(window.location.search);
+  return {
+    recursive: usp.has("recursive") ? usp.get("recursive") : false
+  }
+}
+
+const options = getOptions();
 
 fetch("./data.json")
   .then((res) => res.json())
