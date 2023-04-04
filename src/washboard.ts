@@ -42,11 +42,8 @@ const buildDatasets = (chart, data) => {
   return datasets;
 };
 
-const clearHighlights = (chart_idx, all_charts) => {
+const clearHighlights = ( all_charts) => {
   for (let i = 0; i < all_charts.length; i++) {
-    if (i == chart_idx) {
-      continue;
-    }
     all_charts[i].handle?.setActiveElements([]);
     all_charts[i].handle?.tooltip?.setActiveElements([]);
     all_charts[i].handle?.update();
@@ -100,6 +97,7 @@ export function setupCanvas(chart_idx: number, all_charts, data) {
           text: chart.title,
         },
         tooltip: {
+          backgroundColor: 'rgba(0,0,0,0.7)',
           callbacks: {
             label: (context) => {
               let pt = context.raw;
@@ -167,7 +165,7 @@ export function setupCanvas(chart_idx: number, all_charts, data) {
       },
       onHover: (e, items) => {
         if (items.length == 0) {
-          clearHighlights(chart_idx, all_charts);
+          clearHighlights( all_charts);
           return;
         }
         items.forEach((item) => {
