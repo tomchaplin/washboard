@@ -46,8 +46,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 function getOptions() {
   const usp = new URLSearchParams(window.location.search);
   return {
-    recursive: usp.has("recursive") ? usp.get("recursive") == 'true' : false
-  }
+    recursive: usp.has("recursive") ? usp.get("recursive") == "true" : false,
+  };
 }
 
 const options = getOptions();

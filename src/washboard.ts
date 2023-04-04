@@ -6,7 +6,6 @@ import {
   LinearScale,
   Title,
   Tooltip,
-  ChartData,
 } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 
@@ -42,7 +41,7 @@ const buildDatasets = (chart, data) => {
   return datasets;
 };
 
-const clearHighlights = ( all_charts) => {
+const clearHighlights = (all_charts) => {
   for (let i = 0; i < all_charts.length; i++) {
     all_charts[i].handle?.setActiveElements([]);
     all_charts[i].handle?.tooltip?.setActiveElements([]);
@@ -97,7 +96,7 @@ export function setupCanvas(chart_idx: number, all_charts, data) {
           text: chart.title,
         },
         tooltip: {
-          backgroundColor: 'rgba(0,0,0,0.7)',
+          backgroundColor: "rgba(0,0,0,0.7)",
           callbacks: {
             label: (context) => {
               let pt = context.raw;
@@ -165,7 +164,7 @@ export function setupCanvas(chart_idx: number, all_charts, data) {
       },
       onHover: (e, items) => {
         if (items.length == 0) {
-          clearHighlights( all_charts);
+          clearHighlights(all_charts);
           return;
         }
         items.forEach((item) => {
