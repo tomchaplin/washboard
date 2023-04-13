@@ -47,12 +47,13 @@ function getOptions() {
   const usp = new URLSearchParams(window.location.search);
   return {
     recursive: usp.has("recursive") ? usp.get("recursive") == "true" : false,
+    data: usp.has("data") ? usp.get("data") : 'data.json'
   };
 }
 
 const options = getOptions();
 
-fetch("./data.json")
+fetch(options.data)
   .then((res) => res.json())
   .then((data) => {
     if (options.recursive) {
